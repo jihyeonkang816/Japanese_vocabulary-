@@ -1,0 +1,689 @@
+/* ==========================================================================
+   CSS 디자인 시스템 및 전역 스타일 정의
+   ========================================================================== */
+:root {
+    /* 부드러운 벚꽃 & 내추럴 테마 컬러 팔레트 */
+    --primary-color: #ff6b8b;      /* 벚꽃 핑크 - 주요 강조 및 포인트 버튼 */
+    --primary-hover: #ff477e;      /* 버튼 호버 시 더 짙은 핑크 */
+    --secondary-color: #f7a8b8;    /* 연한 벚꽃 핑크 */
+    --success-color: #2ec4b6;      /* 민트 그린 - 단어 추가 완료, 정답 표시 */
+    --success-hover: #20a396;
+    --danger-color: #e63946;       /* 다홍색 - 삭제 및 오답 경고 */
+    --danger-hover: #d62828;
+    --warning-color: #ffb703;      /* 중요 표시(별표) 노란색 */
+    
+    /* 배경 및 텍스트 칼라 */
+    --bg-app: #fcf8f5;             /* 전체 앱 배경 - 부드럽고 따뜻한 미색 */
+    --bg-card: #ffffff;            /* 카드 및 흰색 배경 박스 */
+    --text-main: #2b2d42;          /* 메인 본문 텍스트 - 진한 회색 */
+    --text-muted: #6c757d;         /* 보조 텍스트 - 흐린 회색 */
+    --border-color: #ebdcd3;       /* 테두리 및 라인 구분선 */
+    
+    /* 폰트 및 모서리 둥글기 */
+    --font-app: 'Outfit', 'Noto Sans KR', 'Noto Sans JP', sans-serif;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    
+    /* 부드러운 그림자(Soft Shadows) 효과 */
+    --shadow-sm: 0 2px 8px rgba(235, 220, 211, 0.4);
+    --shadow-md: 0 8px 24px rgba(214, 189, 175, 0.25);
+    --shadow-lg: 0 16px 40px rgba(214, 189, 175, 0.4);
+    --transition-speed: 0.3s;
+}
+/* 초기화 및 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-app);
+}
+body {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    line-height: 1.6;
+    padding: 20px 10px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+/* 공통 컨테이너 설정 */
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+/* ==========================================================================
+   헤더 디자인
+   ========================================================================== */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.sakura-icon {
+    font-size: 2.2rem;
+    animation: rotate-sakura 10s linear infinite;
+    display: inline-block;
+}
+@keyframes rotate-sakura {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+.logo-area h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.sub-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-left: 4px;
+    border-left: 2px solid var(--border-color);
+    padding-left: 10px;
+}
+/* ==========================================================================
+   공통 카드 디자인 박스 및 버튼
+   ========================================================================== */
+.card-box {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+/* 버튼 전역 스타일 */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.btn:active {
+    transform: scale(0.97);
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
+}
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+}
+.btn-success:hover {
+    background-color: var(--success-hover);
+    box-shadow: 0 4px 12px rgba(46, 196, 182, 0.3);
+}
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+.btn-danger:hover {
+    background-color: var(--danger-hover);
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+}
+.btn-outline {
+    background-color: transparent;
+    border: 1.5px solid var(--border-color);
+    color: var(--text-main);
+}
+.btn-outline:hover {
+    background-color: rgba(255, 107, 139, 0.05);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+.btn-outline.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+.w-100 {
+    width: 100%;
+}
+/* ==========================================================================
+   레이아웃 구조 (그리드)
+   ========================================================================== */
+.app-main {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+/* ==========================================================================
+   왼쪽: 새 단어 등록 폼 영역
+   ========================================================================== */
+.form-section h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-main);
+}
+.form-section h2 i {
+    color: var(--primary-color);
+}
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+.input-group label .required {
+    color: var(--danger-color);
+}
+.input-group label .optional {
+    color: var(--text-muted);
+    font-weight: normal;
+    font-size: 0.8rem;
+}
+.input-group input[type="text"],
+.input-group textarea {
+    padding: 12px;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    background-color: #fafbfc;
+    transition: all var(--transition-speed);
+}
+.input-group input[type="text"]:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.15);
+}
+/* ==========================================================================
+   오른쪽: 단어 목록 및 필터/검색 영역
+   ========================================================================== */
+.list-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+/* 검색 및 필터 바 */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+}
+.search-wrapper {
+    position: relative;
+    flex: 1;
+}
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    width: 18px;
+    height: 18px;
+}
+#search-input {
+    width: 100%;
+    padding: 11px 12px 11px 42px;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    background-color: #fafbfc;
+    transition: all var(--transition-speed);
+}
+#search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.15);
+}
+.filter-actions {
+    display: flex;
+    gap: 10px;
+}
+/* 카드 정보 요약 통계 */
+.vocab-stats {
+    display: flex;
+    gap: 16px;
+    padding-left: 6px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+.vocab-stats strong {
+    color: var(--primary-color);
+}
+/* 단어 카드 리스트 그리드 */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+/* 개별 단어 카드 디자인 */
+.word-card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(235, 220, 211, 0.6);
+    box-shadow: var(--shadow-sm);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 200px;
+    transition: all var(--transition-speed) cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: fade-in 0.4s ease-out;
+}
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.word-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--secondary-color);
+}
+/* 카드 상단 제어 버튼 영역 */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+/* 학습 완료 체크박스 스타일 */
+.completed-checkbox-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    user-select: none;
+}
+.completed-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    transition: all var(--transition-speed);
+}
+.completed-checkbox:checked {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+.completed-checkbox:checked::after {
+    content: "✓";
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+}
+.card-actions-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+/* 별표 버튼 및 삭제 버튼 */
+.btn-star, .btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: transform 0.2s, color var(--transition-speed);
+    border-radius: 50%;
+}
+.btn-star:hover {
+    transform: scale(1.15);
+    color: var(--warning-color);
+}
+.btn-star.active {
+    color: var(--warning-color);
+    fill: var(--warning-color);
+}
+.btn-delete:hover {
+    transform: scale(1.15);
+    color: var(--danger-color);
+    background-color: rgba(230, 57, 70, 0.08);
+}
+/* 카드 본문 콘텐츠 */
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+}
+.jp-word-display {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+    font-family: 'Noto Sans JP', sans-serif;
+    word-break: break-all;
+}
+.ex-sentence-display {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
+    background-color: #fbf8f5;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--secondary-color);
+    margin-bottom: 12px;
+    word-break: break-all;
+}
+/* 뜻 숨김/보기 상태 디자인 */
+.meaning-container {
+    margin-top: auto;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 12px;
+}
+.kr-meaning-display {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    transition: opacity var(--transition-speed);
+}
+.kr-meaning-display.hidden {
+    display: none;
+}
+.btn-toggle-meaning {
+    width: 100%;
+    padding: 8px;
+    font-size: 0.82rem;
+    border-radius: var(--radius-sm);
+}
+/* 학습 완료 카드 스타일 (체크 시 흐려짐) */
+.word-card.completed {
+    opacity: 0.55;
+    background-color: #f7f9fa;
+    border-color: var(--border-color);
+}
+.word-card.completed .jp-word-display {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+/* 단어 없음 상태 (Empty State) */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-muted);
+    gap: 12px;
+}
+.empty-state.hidden {
+    display: none;
+}
+.empty-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--border-color);
+    stroke-width: 1.5;
+}
+.empty-state p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+.empty-state span {
+    font-size: 0.88rem;
+}
+/* ==========================================================================
+   퀴즈 모달 디자인 (Modal Overlay & Content)
+   ========================================================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(43, 45, 66, 0.45);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-speed) ease;
+}
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal-content {
+    width: 90%;
+    max-width: 450px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    animation: scale-up 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    background-color: var(--bg-card);
+}
+@keyframes scale-up {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+}
+.modal-header h3 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-color);
+}
+.btn-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+.btn-close:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+/* 퀴즈 진행 바 */
+.quiz-progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #eceff1;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+.quiz-progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+    transition: width var(--transition-speed) ease;
+}
+.quiz-info-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: right;
+    margin-bottom: 16px;
+}
+/* 퀴즈 단어 제시 영역 */
+.quiz-question-card {
+    background: linear-gradient(135deg, #fffcf9 0%, #fff3f5 100%);
+    border: 1.5px solid var(--secondary-color);
+    border-radius: var(--radius-md);
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.quiz-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+#quiz-question-word {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-top: 6px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+/* 정답/오답 결과창 */
+.quiz-feedback-box {
+    margin-top: 18px;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-weight: 600;
+    animation: fade-in 0.3s;
+}
+.quiz-feedback-box.correct {
+    background-color: rgba(46, 196, 182, 0.12);
+    color: var(--success-hover);
+    border: 1px solid rgba(46, 196, 182, 0.3);
+}
+.quiz-feedback-box.incorrect {
+    background-color: rgba(230, 57, 70, 0.08);
+    color: var(--danger-color);
+    border: 1px solid rgba(230, 57, 70, 0.2);
+}
+.correct-answer-detail {
+    font-size: 0.88rem;
+    margin-top: 4px;
+    color: var(--text-main);
+    font-weight: normal;
+}
+.correct-answer-detail span {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 16px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.hidden {
+    display: none !important;
+}
+/* ==========================================================================
+   푸터 디자인
+   ========================================================================== */
+.app-footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 20px;
+}
+/* ==========================================================================
+   반응형 디자인 (Responsive Breakpoints)
+   ========================================================================== */
+/* 태블릿 및 모바일 크기 (1024px 이하) */
+@media (max-width: 900px) {
+    .app-main {
+        grid-template-columns: 1fr; /* 폼이 목록 위로 오도록 1열 배치 */
+    }
+}
+/* 완전한 모바일 크기 (600px 이하) */
+@media (max-width: 600px) {
+    body {
+        padding: 10px 5px;
+    }
+    
+    .app-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .logo-area {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .sub-title {
+        border-left: none;
+        padding-left: 0;
+        margin-left: 0;
+        margin-top: 4px;
+    }
+    
+    .btn-quiz {
+        width: 100%;
+    }
+    
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}

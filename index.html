@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일본어 단어 암기장 🌸</title>
+    <!-- 구글 폰트 불러오기 (한글, 일본어, 영문 최적화) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide 아이콘 라이브러리 (깔끔한 UI 아이콘 용도) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- 스타일시트 연결 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 헤더 영역 -->
+        <header class="app-header">
+            <div class="logo-area">
+                <span class="sakura-icon">🌸</span>
+                <h1>일본어 단어 암기장</h1>
+                <span class="sub-title">Kotoba Memorizer</span>
+            </div>
+            <!-- 퀴즈 시작 버튼 -->
+            <button id="start-quiz-btn" class="btn btn-primary btn-quiz">
+                <i data-lucide="play-circle"></i>
+                퀴즈 시작
+            </button>
+        </header>
+        <!-- 메인 콘텐츠 영역 (그리드 레이아웃) -->
+        <main class="app-main">
+            <!-- 왼쪽: 단어 추가 폼 -->
+            <section class="form-section card-box">
+                <h2><i data-lucide="plus-circle"></i> 새 단어 등록</h2>
+                <form id="word-form" onsubmit="return false;">
+                    <div class="input-group">
+                        <label for="jp-word">일본어 단어 <span class="required">*</span></label>
+                        <input type="text" id="jp-word" placeholder="예: さくら 또는 食べる" required autocomplete="off">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="kr-meaning">한국어 뜻 <span class="required">*</span></label>
+                        <input type="text" id="kr-meaning" placeholder="예: 벚꽃 또는 먹다" required autocomplete="off">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="ex-sentence">예문 <span class="optional">(선택)</span></label>
+                        <textarea id="ex-sentence" placeholder="예: 桜の花が咲きました。(벚꽃이 피었습니다.)" rows="3" autocomplete="off"></textarea>
+                    </div>
+                    <button type="button" id="add-word-btn" class="btn btn-success">
+                        <i data-lucide="plus"></i> 단어 추가하기
+                    </button>
+                </form>
+            </section>
+            <!-- 오른쪽: 단어 목록 및 필터/검색 -->
+            <section class="list-section">
+                <!-- 검색 및 필터 헤더 -->
+                <div class="filter-bar card-box">
+                    <!-- 검색창 -->
+                    <div class="search-wrapper">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="search-input" placeholder="일본어 단어 또는 한국어 뜻으로 검색...">
+                    </div>
+                    
+                    <!-- 필터 버튼 모음 -->
+                    <div class="filter-actions">
+                        <button id="filter-star-btn" class="btn btn-outline">
+                            <i data-lucide="star"></i> 중요 단어만 보기
+                        </button>
+                        <button id="filter-all-btn" class="btn btn-outline active">
+                            전체 보기
+                        </button>
+                    </div>
+                </div>
+                <!-- 단어 목록 카드 그리드 -->
+                <div class="vocab-stats">
+                    <span>등록된 단어: <strong id="total-count">0</strong>개</span>
+                    <span>학습 완료: <strong id="completed-count">0</strong>개</span>
+                </div>
+                <div id="word-cards-grid" class="cards-grid">
+                    <!-- JavaScript에서 동적으로 카드 삽입 예정 -->
+                </div>
+                
+                <!-- 단어가 없을 때 표시되는 빈 상태(Empty State) -->
+                <div id="empty-state" class="empty-state card-box">
+                    <i data-lucide="folder-open" class="empty-icon"></i>
+                    <p>등록된 단어가 없습니다.</p>
+                    <span>새로운 단어를 입력하여 추가해 보세요!</span>
+                </div>
+            </section>
+        </main>
+        <!-- 푸터 영역 -->
+        <footer class="app-footer">
+            <p>© 2026 일본어 단어 암기장. SW프로그래밍 기초 기말고사 대체과제</p>
+        </footer>
+    </div>
+    <!-- 퀴즈 화면 모달 (Overlay) -->
+    <div id="quiz-modal" class="modal-overlay">
+        <div class="modal-content card-box">
+            <div class="modal-header">
+                <h3><i data-lucide="award"></i> 일본어 단어 퀴즈</h3>
+                <button id="close-quiz-btn" class="btn-close"><i data-lucide="x"></i></button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- 퀴즈 문제 정보 -->
+                <div class="quiz-progress-bar">
+                    <div id="quiz-progress" class="quiz-progress"></div>
+                </div>
+                <div class="quiz-info-text">
+                    단어 매칭 퀴즈
+                </div>
+                <!-- 문제 제시 카드 -->
+                <div class="quiz-question-card">
+                    <span class="quiz-label">일본어 단어</span>
+                    <h2 id="quiz-question-word">日本語</h2>
+                </div>
+                <!-- 답변 입력 영역 -->
+                <form id="quiz-form" onsubmit="return false;">
+                    <div class="input-group">
+                        <label for="quiz-answer">한국어 뜻 입력</label>
+                        <input type="text" id="quiz-answer" placeholder="정답을 입력하세요" autocomplete="off" required>
+                    </div>
+                    <button type="submit" id="submit-answer-btn" class="btn btn-primary w-100">정답 확인</button>
+                </form>
+                <!-- 결과 메시지 표시 영역 -->
+                <div id="quiz-feedback" class="quiz-feedback-box hidden">
+                    <p id="quiz-feedback-text">결과 메시지</p>
+                    <p id="quiz-correct-answer" class="correct-answer-detail hidden">정답: <span id="correct-answer-text"></span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="next-quiz-btn" class="btn btn-success hidden">다음 문제 <i data-lucide="arrow-right"></i></button>
+                <button id="stop-quiz-btn" class="btn btn-outline">퀴즈 종료</button>
+            </div>
+        </div>
+    </div>
+    <!-- 스크립트 연결 -->
+    <script src="script.js"></script>
+</body>
+</html>
